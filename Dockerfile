@@ -1,24 +1,24 @@
 # Use the official Python image from the Docker Hub
-FROM python:3.9-slim
-
-# Set the working directory inside the container
-WORKDIR /app
-
-# Copy the requirements file to the working directory
-COPY requirements.txt .
-
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the entire Flask app to the working directory
-COPY . .
-
-# Expose port 5001 (the port Flask will run on)
-EXPOSE 5001
+FROM python:3.10-slim
 
 # Set environment variables
-ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-# Command to run the Flask app with Gunicorn (for production)
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5001", "app:app"]
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the requirements file into the container
+COPY requirements.txt /app/
+
+# Install the dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application code into the container
+COPY . /app/
+
+# Expose the port on which the Flask app will run
+EXPOSE 5001
+
+# Run the Flask app
+CMD ["python", "app.py"]
