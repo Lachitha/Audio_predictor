@@ -4,3 +4,4 @@ tensorflow
 librosa
 soundfile
 scikit-learn
+h5py==3.6.0

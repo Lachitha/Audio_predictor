@@ -1,6 +1,11 @@
 # Use the official Python image from the Docker Hub
 FROM python:3.10-slim
 
+# Install build dependencies
+RUN apt-get update && \
+    apt-get install -y build-essential && \
+    apt-get clean
+
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
